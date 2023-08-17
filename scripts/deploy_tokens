@@ -1,0 +1,28 @@
+import { ethers } from "hardhat";
+// my testing - token0 deployed to local address - 0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0
+// token1 deployed to local node address - 0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82
+async function main() {
+    const [deployer, depositAddress] = await ethers.getSigners();
+
+    const Token0 = await ethers.getContractFactory('Token0', deployer);
+    const token0 = await Token0.deploy()
+
+    const Token1 = await ethers.getContractFactory('Token1', deployer);
+    const token1 = await Token1.deploy()
+
+    // minting tokens to the deployer address
+    await token0.connect(deployer).mint(depositAddress.address, ethers.parseEther('100000000'))
+    await token1.connect(deployer).mint(depositAddress.address, ethers.parseEther('100000000'))
+
+    const token1Name = await token0.name()
+    const token2Name = await token1.name()
+
+    console.log(`Token 1 - ${token1Name} Deployed to ${await token0.getAddress()}`)
+    console.log(`Token 2 - ${token2Name} Deployed to ${await token1.getAddress()}`)
+
+}
+
+main().then(() => process.exit(0)).catch((err) => {
+    console.log(err);
+    process.exit(1)
+})
