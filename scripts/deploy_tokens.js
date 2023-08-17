@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
-// Token 1 - GoldToken Deployed to 0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f)
+// Token 1 - GoldToken Deployed to 0x7a2088a1bFc9d81c55368AE168C2C02570cB814F)
 // }
-// Token 2 - Leptronic Deployed to 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
+// Token 2 - Leptronic Deployed to 0x09635F643e140090A9A8Dcd712eD6285858ceBef
 async function main() {
     const [deployer, depositAddress] = await ethers.getSigners();
 
@@ -12,8 +12,8 @@ async function main() {
     const token1 = await Token1.deploy()
 
     // minting tokens to the deployer address
-    await token0.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000000'))
-    await token1.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000000'))
+    await token0.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000'))
+    await token1.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000'))
 
     const token1Name = await token0.name()
     const token2Name = await token1.name()
