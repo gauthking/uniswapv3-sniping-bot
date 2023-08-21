@@ -6,8 +6,8 @@
 // POSITION_DESCRIPTOR_ADDRESS= '0x9A676e781A523b5d0C0e43731313A708CB607508'
 // POSITION_MANAGER_ADDRESS= '0x0B306BF915C4d645ff596e518fAf3F9669b97016'
 
-const { ContractFactory, utils, ethers } = require("ethers")
-const { waffle } = require("hardhat");
+const { ContractFactory, utils } = require("ethers")
+const { waffle, ethers } = require("hardhat");
 
 const artifacts = {
     UniswapV3Factory: require("@uniswap/v3-core/artifacts/contracts/UniswapV3Factory.sol/UniswapV3Factory.json"),
@@ -44,8 +44,10 @@ const linkLibraries = ({ bytecode, linkReferences }, libraries) => {
 }
 
 async function main() {
-    const provider = waffle.provider
-    const owner = provider.getSigner()
+    // const provider = waffle.provider
+    // const owner = provider.getSigner()
+    const [owner] = await ethers.getSigners();
+
 
     const Weth = new ContractFactory(artifacts.WETH.abi, artifacts.WETH.bytecode, owner);
     const weth = await Weth.deploy(ethers.utils.parseEther('1000000'), owner);

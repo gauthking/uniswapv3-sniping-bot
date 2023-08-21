@@ -3,7 +3,10 @@ const { ethers } = require("hardhat");
 // }
 // Token 2 - Leptronic Deployed to 0x09635F643e140090A9A8Dcd712eD6285858ceBef
 async function main() {
-    const [deployer, depositAddress] = await ethers.getSigners();
+    const [deployer] = await ethers.getSigners();
+    // const deployer = "0x6Cf0944aDB0e90E3b89d0505e9B9668E8c0E0bA1"
+    const depositAddress = "0x2824C88FFf36D53CBD0F932b3ba4782Ff435DE8C"
+    console.log("Deploying contracts with the account:", deployer.address);
 
     const Token0 = await ethers.getContractFactory('Token0', deployer);
     const token0 = await Token0.deploy()
@@ -11,9 +14,11 @@ async function main() {
     const Token1 = await ethers.getContractFactory('Token1', deployer);
     const token1 = await Token1.deploy()
 
-    // minting tokens to the deployer address
-    await token0.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000'))
-    await token1.connect(deployer).mint(depositAddress.address, ethers.utils.parseEther('100000'))
+    // minting tokens to the deposit address by deployer
+    await token0.mint(depositAddress, ethers.utils.parseEther('100000'))
+    await token1.mint(depositAddress, ethers.utils.parseEther('100000'))
+
+    console.log(await token0.balanceOf(depositAddress))
 
     const token1Name = await token0.name()
     const token2Name = await token1.name()

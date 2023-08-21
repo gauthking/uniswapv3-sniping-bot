@@ -4,12 +4,24 @@ require("@nomiclabs/hardhat-waffle");
 module.exports = {
   solidity: {
     version: "0.8.17",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 5000,
-        details: { yul: false },
-      },
-    }
+    // settings: {
+    //   optimizer: {
+    //     enabled: true,
+    //     runs: 5000,
+    //     details: { yul: false },
+    //   },
+    // }
+  },
+  networks: {
+    mumbai: {
+      url: "https://rpc-mumbai.maticvigil.com",
+      accounts: [""],
+      blockConfirmations: 6,
+    },
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
   },
 };
